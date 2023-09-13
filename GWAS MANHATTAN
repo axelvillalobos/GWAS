@@ -1,0 +1,15 @@
+# Carga la biblioteca qqman
+library(qqman)
+
+# Lee los resultados del GWAS
+resultados <- read.table("gwas_results.assoc", header = TRUE)
+
+# Crea un gráfico de Manhattan sin etiquetas primero
+grafico_manhattan <- manhattan(resultados, main = "Gráfico de Manhattan")
+
+# Personaliza el gráfico de Manhattan agregando etiquetas a SNPs específicos
+text(x = resultados$BP, y = -log10(resultados$P), labels = resultados$SNP, 
+     pos = 3, cex = 0.7, col = "blue")
+
+# Muestra el gráfico de Manhattan modificado
+print(grafico_manhattan)
