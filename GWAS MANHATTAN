@@ -1,5 +1,7 @@
 # Carga la biblioteca qqman
 library(qqman)
+#Analisis de asociacion
+system("plink.exe --file genotipos --assoc --out gwas_results")
 
 # Lee los resultados del GWAS
 resultados <- read.table("gwas_results.assoc", header = TRUE)
