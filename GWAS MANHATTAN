@@ -1,17 +1,25 @@
-# Carga la biblioteca qqman
+# clear workplace
+rm(list =ls())
+
+# Load the qqman library
 library(qqman)
+
 #Analisis de asociacion
 system("plink.exe --file genotipos --assoc --out gwas_results")
 
-# Lee los resultados del GWAS
-resultados <- read.table("gwas_results.assoc", header = TRUE)
+# Read the GWAS results
+results <- read.table("gwas_results.assoc", header = TRUE)
 
-# Crea un gráfico de Manhattan sin etiquetas primero
-grafico_manhattan <- manhattan(resultados, main = "Gráfico de Manhattan")
+#Crear Tabla de Resultads en Excel 
+library(openxlsx)
+write.xlsx(results,"asoc.xlsx")#ver por genotipo
 
-# Personaliza el gráfico de Manhattan agregando etiquetas a SNPs específicos
-text(x = resultados$BP, y = -log10(resultados$P), labels = resultados$SNP, 
-     pos = 3, cex = 0.7, col = "blue")
+# Create a Manhattan plot without labels first
+manhattan_plot <- manhattan(results, main = "Manhattan Plot")
 
-# Muestra el gráfico de Manhattan modificado
-print(grafico_manhattan)
+# Customize the Manhattan plot by adding labels to specific SNPs
+text(x = results$BP, y = -log10(results$P), labels = results$SNP, 
+     pos = 3, cex = 0.9, col = "blue")
+
+# Show the modified Manhattan plot
+print(manhattan_plot)
